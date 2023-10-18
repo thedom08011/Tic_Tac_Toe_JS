@@ -1,0 +1,59 @@
+*{
+margin :0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* reglage fond */
+body{
+	background-color : lightseagreen;
+	height:100vh;
+	font-family: Helvetica, sans-serif;
+	display: flex;   /* sans les ligne 12,13 et 14 la grille n'est pas aligné*/
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap : 1rem;
+}
+
+/* reglage grille*/
+.board {
+	width : 320px;
+	height:320px;
+	display : grid; /* gestion des carrés ligne 21,22, 23,24 */
+	grid-template-columns : repeat(3, 1fr);
+	grid-template-rows:repeat(3, 1fr);
+	gap : 2px;
+	background-image: url(grid.png);
+	background-size:cover;  /* sans cette ligne la grille n'apparait pas entièrement*/
+	border-radius : 3rem; /* bordure grille */
+	box-shadow : 0 0 15px 5px rgba(50, 50, 50, 0.5); /* effet ombre pour donner un petit effet 3d */
+}
+
+/* pour faire en sorte que lorsque le curseur de la flèche passe au dessus de la grille
+elle devieint une maint */
+.board:hover{
+	cursor:pointer;
+}
+
+/* gestion croix et cercle */
+.circle {
+	background-image : url(circle.png);
+}
+.cross {
+	background-image : url(cross.png);
+}
+
+.circle,
+.cross{
+		background-size : 80%; 
+	background-position : center;
+	background-repeat : no-repeat; /* sans cette ligne les cercles ou croix apparaissent plusieurs fois dans le carré */
+}
+
+#result {
+	width : 200px;
+	height : 2rem;
+	font-size :1,5rem;
+	text-align: center;
+}
