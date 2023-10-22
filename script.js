@@ -12,7 +12,11 @@ const PLAYER_TWO = -1;
 let currentPlayer = PLAYER_ONE;
 let gameOver = false;
 
-let score = 0;
+let scorePlayerOne = 0;
+let scorePlayerTwo = 0;
+
+
+ 
 
 // mettre les carrés dans le DOM
 const cellElements = document.querySelectorAll(".cell");
@@ -20,6 +24,7 @@ const cellElements = document.querySelectorAll(".cell");
 // ajouter un event listener à chaque case 
 cellElements.forEach((cell, index) => {
     cell.addEventListener("click", () => {
+        console.log("Cell clicked:", index);  // Ajout du console.log ici
         placeMarker(index);
     });
 });
@@ -31,12 +36,22 @@ function placeMarker(index) {
     let col = index % 3;
     let row = Math.floor(index / 3);
 
-    if (boardData[row][col] === 0 && gameOver === false) {
+    console.log("Row:", row, "Col:", col, "Value:", boardData[row][col]);
+
+    if (boardData[row][col] === 0) {
         boardData[row][col] = currentPlayer;
         drawMarkers();
 
-        if (checkResult()) {
-            endGame(currentPlayer);
+        let result = checkResult();
+        
+        if (result === PLAYER_ONE) {
+            scorePlayerOne += 1;
+            updateScore();
+            endGame(PLAYER_ONE);
+        } else if (result === PLAYER_TWO) {
+            scorePlayerTwo += 1;
+            updateScore();
+            endGame(PLAYER_TWO);
         } else {
             currentPlayer = (currentPlayer === PLAYER_ONE) ? PLAYER_TWO : PLAYER_ONE;
             if (checkTie()) {
@@ -68,12 +83,12 @@ function checkResult() {
         let colSum = boardData[0][i] + boardData[1][i] + boardData[2][i];
 
         if (rowSum === 3 || colSum === 3 || checkDiagonals() === PLAYER_ONE) {
-            return true;
+            return PLAYER_ONE;
         } else if (rowSum === -3 || colSum === -3 || checkDiagonals() === PLAYER_TWO) {
-            return true;
+            return PLAYER_TWO;
         }
     }
-    return false;
+    return null;
 }
 
 // Fonction pour vérifier les victoires diagonales
@@ -93,6 +108,15 @@ function checkDiagonals() {
     return 0;
 }
 
+// fonction de mise à jour du score
+function updateScore() {
+    const playerOneScoreElement = document.getElementById("playerOneScore");
+    const playerTwoScoreElement = document.getElementById("playerTwoScore");
+    playerOneScoreElement.textContent = `Player 1: ${scorePlayerOne}`;
+    playerTwoScoreElement.textContent = `Player 2: ${scorePlayerTwo}`;
+}
+
+
 // Fonction pour vérifier si le jeu est un match nul
 function checkTie() {
     return boardData.flat().every(cell => cell !== 0);
@@ -104,6 +128,7 @@ function tieGame() {
     gameOver = true;
 	const resultElement = document.getElementById("result");
 	resultElement.innerText = "it's a tie !";
+    setTimeout(resetGame, 3000); // Attendez 3 secondes avant de redémarrer
 
 }
 
@@ -113,5 +138,22 @@ function endGame(winner) {
     gameOver = true;
 	const resultElement = document.getElementById("result");
 	resultElement.innerText = `Player ${winner === PLAYER_ONE ? 1 : 2} wins!`;
+    setTimeout(resetGame, 3000); // Attendez 3 secondes avant de redémarrer
 }
 
+// pour mettre leu à zero
+function resetGame() {
+    boardData = [
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+    ];
+    currentPlayer = PLAYER_ONE;
+    gameOver = false;
+    cellElements.forEach(cell => {
+        cell.classList.remove("cross");
+        cell.classList.remove("circle");
+    });
+    const resultElement = document.getElementById("result");
+    resultElement.innerText = "";
+}

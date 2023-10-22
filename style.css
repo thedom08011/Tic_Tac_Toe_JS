@@ -16,6 +16,25 @@ body{
 	gap : 1rem;
 }
 
+.up{
+    position: fixed;
+	display :flex;
+	padding: 1rem;
+    top: 5%;
+    left: 0;
+    width: 100%; /* cela garantit que la div s'étend sur toute la largeur de la fenêtre/viewport */
+    z-index: 1000; /* assurez-vous que la div reste au-dessus des autres éléments */
+}
+
+.left, .right {
+    box-sizing: border-box;
+	font-size: 24px;
+}
+
+.right{
+	margin-left:auto;
+}
+
 /* reglage grille*/
 .board {
 	width : 320px;
