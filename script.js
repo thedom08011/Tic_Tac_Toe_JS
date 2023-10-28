@@ -15,7 +15,8 @@ let gameOver = false;
 let scorePlayerOne = 0;
 let scorePlayerTwo = 0;
 
-
+// mettre le bouton dans le DOM et créer un événement qui appelle la fonction resetScore
+document.getElementById("reset").addEventListener('click', resetScore);
  
 
 // mettre les carrés dans le DOM
@@ -128,9 +129,12 @@ function tieGame() {
     gameOver = true;
 	const resultElement = document.getElementById("result");
 	resultElement.innerText = "it's a tie !";
+    const restartGame = document.getElementById("restart");
+    restartGame.innerText = `Game will restart in 3 seconds !`,
     setTimeout(resetGame, 3000); // Attendez 3 secondes avant de redémarrer
 
 }
+
 
 // Fonction pour gérer la fin du jeu et annoncer le gagnant
 function endGame(winner) {
@@ -138,8 +142,12 @@ function endGame(winner) {
     gameOver = true;
 	const resultElement = document.getElementById("result");
 	resultElement.innerText = `Player ${winner === PLAYER_ONE ? 1 : 2} wins!`;
+    const restartGame = document.getElementById("restart");
+    restartGame.innerText = `Game will restart in 3 seconds !`,
     setTimeout(resetGame, 3000); // Attendez 3 secondes avant de redémarrer
 }
+
+resetGame();  // la fonction est créé plus bas
 
 // pour mettre leu à zero
 function resetGame() {
@@ -156,4 +164,14 @@ function resetGame() {
     });
     const resultElement = document.getElementById("result");
     resultElement.innerText = "";
+    const restartGame = document.getElementById("restart");
+    restartGame.innerText = "";
+}
+
+function resetScore(){
+        scorePlayerOne = 0;
+        scorePlayerTwo = 0;
+        document.getElementById("playerOneScore").textContent = "Player 1 : 0";
+        document.getElementById("playerTwoScore").textContent = "Player 2 : 0";
+    resetGame();
 }

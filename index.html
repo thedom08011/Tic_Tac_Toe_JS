@@ -1,4 +1,6 @@
-<html>
+
+<!DOCTYPE html>
+	<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -6,7 +8,12 @@
 		<title>Tic Tac Toe</title>
 	</head>
 	<body>
-	
+		<div class="up">
+			<div id="playerOneScore" class="left">Player 1 : 0</div>
+			<div id="playerTwoScore" class="right">Player 2 : 0</div>
+		</div>
+		
+		
 
 		<section class="board">
 		<!-- gestion des carrés -->
@@ -21,6 +28,8 @@
 		<div class="cell"></div>
 		</section>
 		<h1 id="result"></h1>
+		<h2 id="restart"></h2>
+		<button id="reset">reset score !</button>
 		<script type="text/javascript" src="script.js"></script>
 	</body>
 </html>
